@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Reset CSS */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Establecer una altura y ancho predeterminados para todos los elementos */
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
+/* Establecer una fuente predeterminada y tamaño de fuente base */
+body {
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+}
+
+/* Estilos generales de encabezados */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: bold;
+}
+
+/* Estilos generales de enlaces */
+a {
+  text-decoration: none;
+  color: #000;
+}
+
+/* Estilos generales de listas sin viñetas */
+ul, ol {
+  list-style: none;
+}
