@@ -8,6 +8,8 @@ import { MyOrders } from "../MyOrders";
 import {SingIn} from '../SignIn';
 import {NotFound} from '../NotFound'
 import './App.css'
+import Navbar from '../Components/Navbar';
+import { Layout } from '../Components/Layout';
 
 const ResolveRoutes = ()=>{
   let routes = useRoutes([
@@ -27,7 +29,14 @@ const App = () => {
 
   return (
     <BrowserRouter>
-      <ResolveRoutes/>
+
+        <Navbar/>
+
+        <Layout>
+         <ResolveRoutes/>
+        </Layout>
+
+     
     </BrowserRouter>
   )
 }
