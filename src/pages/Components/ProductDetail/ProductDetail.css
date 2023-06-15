@@ -2,7 +2,82 @@
     background-color: white;
 
     width: 80%;
-    
+
+
     margin-top: 80px;
     padding: 16px;
+
+    display: flex;
+    
+
+
+    gap: 16px;
+    border-radius: 0 18px 0 18px;
 }
+
+.card-detail--img{
+    display: flex;
+    align-items: center;
+    background-size: cover;
+}
+
+
+.cart-detail--info-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+   
+    
+}
+
+.cart-detail--info-content h2{
+
+   margin-bottom: 4px;    
+}
+
+
+.card-detail--info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  
+.card-detail--info p:nth-child(3){
+    font-size: 12px;
+    color: gray;
+    margin-top: 10%;
+}
+
+.info--description{
+
+    font-size: 16px;
+}
+
+  
+  .card-detail--buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+
+    margin-top: 20%;
+    gap: 16px;
+    
+  }
+
+  
+  .card-detail--buttons button{
+    
+    padding: 8px 16px;
+
+    background-color: #292929;
+    color: white;
+    
+    border-radius: 8px 0;
+  }
+
+  .card-detail--buttons button:hover{
+    
+    transform: scale(110%);
+    background-color: #131313;
+    transition: 0.4s;
+  }

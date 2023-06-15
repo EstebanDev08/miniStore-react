@@ -14,7 +14,7 @@ const ProductCard = ({item})=>{
         }
     
         openModal();
-        console.log(item);
+
         addItemToModal(item);
       }
 

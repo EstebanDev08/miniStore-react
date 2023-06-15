@@ -4,26 +4,29 @@ import './ProductDetail.css'
 
 const ProductDetail = ()=>{
  
-    const {itemOnModal} = React.useContext(GlobalContext)
+    const {itemOnModal, addCar} = React.useContext(GlobalContext)
     const item = itemOnModal;
 
 
     return(
         <article className="card-detail--container">
-            <figure>
+            <figure className="card-detail--img">
                 <img src={item.images[0]} alt={item.title} />
             </figure>
-            <div>
-                <p> {item.title}</p>
-                <p> $ {item.price}</p>
-                <p>{item.category.name}</p>
-                <p>{item.description}</p>
-            </div>
+            <section className="cart-detail--info-content">
+                <div className="card-detail--info">
+                    <h2> {item.title}</h2>
+                    <p> $ {item.price}</p>
+                    <p> Description</p>
+                    <p className="info--description">{item.description}</p>
+                </div>
 
-            <div>
-                <button>cancel</button>
-                <button>add to car</button>
-            </div>
+                <div className="card-detail--buttons">
+                    
+                    <button onClick={()=>addCar(item)}>Add to Cart</button>
+                </div>
+            </section>
+
             
         </article>
     )
