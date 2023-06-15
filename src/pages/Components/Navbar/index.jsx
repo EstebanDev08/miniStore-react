@@ -1,7 +1,12 @@
 import { NavLink } from "react-router-dom";
+import { GlobalContext } from "../../../context/GlobalContext";
+import React from "react";
+
 
 const Navbar = () => {
   const activeStyle = "underline underline-offset-4 ";
+
+  const {carCount} = React.useContext(GlobalContext)
 
   const categories = [
 
@@ -17,7 +22,7 @@ const Navbar = () => {
     { to: "/sign-in", text: "Sign In" },
   ];
   return (
-    <nav className="flex justify-between items-center border-b-2 z-10 top-0 w-full py-5 px-8 text-sm font-light">
+    <nav className="flex justify-between fixed bg-white items-center border-b-2 z-10 top-0 w-full py-5 px-8 text-sm font-light">
       <ul className="flex items-center gap-3">
 
         <NavLink to='/' className='font-semibold text-lg' >
@@ -46,7 +51,7 @@ const Navbar = () => {
             </NavLink>
           </li>
         ))}
-        <li>🛒2</li>
+        <li>🛒{carCount}</li>
       </ul>
     </nav>
   );
