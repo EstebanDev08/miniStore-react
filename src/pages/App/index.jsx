@@ -10,6 +10,7 @@ import {NotFound} from '../NotFound'
 import './App.css'
 import Navbar from '../Components/Navbar';
 import { Layout } from '../Components/Layout';
+import { GlobalContextProvider } from '../../context/GlobalContext';
 
 const ResolveRoutes = ()=>{
   let routes = useRoutes([
@@ -28,16 +29,20 @@ const ResolveRoutes = ()=>{
 const App = () => {
 
   return (
-    <BrowserRouter>
+
+    <GlobalContextProvider>
+      <BrowserRouter>
 
         <Navbar/>
 
         <Layout>
-         <ResolveRoutes/>
+          <ResolveRoutes/>
         </Layout>
 
-     
-    </BrowserRouter>
+
+      </BrowserRouter>
+    </GlobalContextProvider>
+
   )
 }
 

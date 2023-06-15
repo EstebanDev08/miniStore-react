@@ -17,7 +17,7 @@ const Navbar = () => {
     { to: "/sign-in", text: "Sign In" },
   ];
   return (
-    <nav className="flex justify-between items-center  z-10 top-0 w-full py-5 px-8 text-sm font-light">
+    <nav className="flex justify-between items-center border-b-2 z-10 top-0 w-full py-5 px-8 text-sm font-light">
       <ul className="flex items-center gap-3">
 
         <NavLink to='/' className='font-semibold text-lg' >
