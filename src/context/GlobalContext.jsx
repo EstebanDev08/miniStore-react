@@ -38,6 +38,15 @@ const GlobalContextProvider = ({children})=>{
         setItemOnModal(item)
     }
 
+
+    const [isOpenShopingCart, setOpenShopingCart] = useState(false)
+
+    const toggleShopingCart = () => {
+
+        const newState = !isOpenShopingCart
+        setOpenShopingCart(newState)
+    }
+
     return(
                 
         <GlobalContext.Provider value={{
@@ -47,7 +56,9 @@ const GlobalContextProvider = ({children})=>{
             openModal,
             isOpenModal,
             addItemToModal,
-            itemOnModal
+            itemOnModal,
+            isOpenShopingCart,
+            toggleShopingCart,
 
 
         }}>

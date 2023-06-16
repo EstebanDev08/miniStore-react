@@ -6,7 +6,11 @@ import React from "react";
 const Navbar = () => {
   const activeStyle = "underline underline-offset-4 ";
 
-  const {carCount} = React.useContext(GlobalContext)
+  const {carCount, toggleShopingCart} = React.useContext(GlobalContext)
+
+  const handleClickCart = ()=>{
+    toggleShopingCart();
+  }
 
   const categories = [
 
@@ -51,7 +55,7 @@ const Navbar = () => {
             </NavLink>
           </li>
         ))}
-        <li>🛒{carCount}</li>
+        <li className="cursor-pointer" onClick={handleClickCart} >🛒{carCount}</li>
       </ul>
     </nav>
   );

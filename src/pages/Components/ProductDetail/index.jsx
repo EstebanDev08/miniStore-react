@@ -16,7 +16,7 @@ const ProductDetail = ()=>{
             <section className="cart-detail--info-content">
                 <div className="card-detail--info">
                     <h2> {item.title}</h2>
-                    <p> $ {item.price}</p>
+                    <p> ${item.price}</p>
                     <p> Description</p>
                     <p className="info--description">{item.description}</p>
                 </div>

@@ -10,7 +10,9 @@ import {NotFound} from '../NotFound'
 import './App.css'
 import Navbar from '../Components/Navbar';
 import { Layout } from '../Components/Layout';
-import { GlobalContextProvider } from '../../context/GlobalContext';
+import { GlobalContext, GlobalContextProvider } from '../../context/GlobalContext';
+import { CheckoutSideMenu } from '../Components/CheckoutSideMenu';
+import React from 'react';
 
 const ResolveRoutes = ()=>{
   let routes = useRoutes([
@@ -26,12 +28,20 @@ const ResolveRoutes = ()=>{
 }
 
 
+
 const App = () => {
 
   return (
 
     <GlobalContextProvider>
-      <BrowserRouter>
+
+      <GlobalContext.Consumer>
+        {({isOpenShopingCart,
+
+        })=>(
+
+
+        <BrowserRouter>
 
         <Navbar/>
 
@@ -40,7 +50,14 @@ const App = () => {
         </Layout>
 
 
-      </BrowserRouter>
+        { isOpenShopingCart && <CheckoutSideMenu/>}
+
+        </BrowserRouter>
+
+        )}
+
+      </GlobalContext.Consumer>
+
     </GlobalContextProvider>
 
   )
