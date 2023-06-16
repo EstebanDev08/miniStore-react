@@ -1,6 +1,6 @@
 
 
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 
 const GlobalContext = createContext();
 
@@ -11,17 +11,59 @@ const GlobalContextProvider = ({children})=>{
 
     const [carCount , setCarCount] = useState(0)
 
-    const addCar = (item)=>{
+    const [subTotal, setSubtotal] = useState(0)
 
-        const carItems = [...carItem]
+    const addToCart = (item) => {
+        const carItems = [...carItem];
+        const existingItem = carItems.find((carItem) => carItem.id === item.id);
+      
+        if (existingItem) {
+          existingItem.amount += 1;
+        } else {
+          carItems.push({ ...item, amount: 1 });
+        }
+        
+        setCar(carItems);
 
-        carItems.push(item)
+    };
 
-        setCar(carItems)
 
-        setCarCount(carItems.length)
-    }
+    const removeToCart = (id) => {
+        const updatedCarItems = carItem.map((item) => {
+          if (item.id === id) {
+            if (item.amount > 0) {
+              return { ...item, amount: item.amount - 1 };
+            }
+          }
+          return item;
+        });
+      
+        const filteredCarItems = updatedCarItems.filter((item) => item.amount > 0);
+        setCar(filteredCarItems);
+      };
 
+
+      const removeAllItemsCart = (id)=>{
+
+        const updatedCarItems = carItem.filter((item) => item.id !== id);
+        setCar(updatedCarItems);
+
+      }
+            
+    useEffect(() => {
+        const totalItems = carItem.reduce((total, item) => total + item.amount, 0);
+        setCarCount(totalItems);
+
+    }, [carItem]);
+
+    useEffect(() => {
+        const subTotal = carItem.reduce((total, item) => total + (item.amount * item.price), 0);
+        setSubtotal(subTotal);
+
+    }, [carItem]);
+
+
+    
 
     const [isOpenModal, setOpenModal] = useState(false)
  
@@ -50,8 +92,7 @@ const GlobalContextProvider = ({children})=>{
     return(
                 
         <GlobalContext.Provider value={{
-            addCar,
-            carItem,
+            addToCart,
             carCount,
             openModal,
             isOpenModal,
@@ -59,6 +100,12 @@ const GlobalContextProvider = ({children})=>{
             itemOnModal,
             isOpenShopingCart,
             toggleShopingCart,
+            carItems:carItem,
+            subTotal,
+            removeToCart,
+            removeAllItemsCart
+         
+           
 
 
         }}>

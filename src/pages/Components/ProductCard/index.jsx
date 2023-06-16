@@ -4,7 +4,7 @@ import { GlobalContext } from '../../../context/GlobalContext'
 
 const ProductCard = ({item})=>{
 
-    const {addCar, openModal, addItemToModal } = React.useContext(GlobalContext)
+    const {addToCart, openModal, addItemToModal } = React.useContext(GlobalContext)
 
 
     const handleCardClick = (event, item) => {
@@ -22,7 +22,7 @@ const ProductCard = ({item})=>{
         <article className="card-container" onClick={()=>handleCardClick(event, item)} >
             <figure className="card-container--content">
                 <img src={item.images[0]} alt={item.title} />
-                <span className='card-add' onClick={(item)=>addCar(item)}>+</span>
+                <span className='card-add' onClick={()=>addToCart(item)}>+</span>
                 <span className='card-categorie'>{item.category.name}</span>
                 
             </figure>

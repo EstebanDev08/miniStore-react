@@ -4,7 +4,7 @@ import './ProductDetail.css'
 
 const ProductDetail = ()=>{
  
-    const {itemOnModal, addCar} = React.useContext(GlobalContext)
+    const {itemOnModal, addToCart} = React.useContext(GlobalContext)
     const item = itemOnModal;
 
 
@@ -23,7 +23,7 @@ const ProductDetail = ()=>{
 
                 <div className="card-detail--buttons">
                     
-                    <button onClick={()=>addCar(item)}>Add to Cart</button>
+                    <button onClick={()=>addToCart(item)}>Add to Cart</button>
                 </div>
             </section>
 
