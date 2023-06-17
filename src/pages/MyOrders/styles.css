@@ -1,0 +1,31 @@
+.myorders-container{
+    position: relative;
+    width: 100%;
+    max-width: 1400px;
+    padding: 0 5%;
+    top: 80px;
+}
+
+.myorders--header .header-title{
+    font-size: 60px;
+}
+
+.myorders-card--container{
+
+    
+}
+
+.myorders-card--container .card--titles{
+
+    display: grid;
+    grid-template-columns: repeat(5, 1fr)  40px;
+    justify-content: space-around;
+
+    margin: 32px 0 24px ;
+    font-weight: bold;
+    text-decoration: underline;
+    font-size: 12px;
+
+}
+
+

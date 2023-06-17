@@ -5,12 +5,15 @@ import { GlobalContext } from '../../../context/GlobalContext'
 
 const CheckoutSideMenu = () => {
 
-    const {toggleShopingCart, carItems, carCount, subTotal} = React.useContext(GlobalContext)
+    const {toggleShopingCart, carItems, carCount, subTotal, addNewOrder} = React.useContext(GlobalContext)
 
    
 
-    const handleClikCheckout =( item)=>{
+    const handleClikCheckout =(items, subTotal, totalItems )=>{
         toggleShopingCart()
+        if(totalItems > 0){
+            addNewOrder({cartItems:items, totalPrice:subTotal, totalItems:totalItems })
+        }
     }
 
 
@@ -27,7 +30,7 @@ const CheckoutSideMenu = () => {
 
                 <ProductCart key={item.id} item={item}/>
 
-            ) ) : <div> Add Products</div> }              
+            ) ) : <div className='heigth-200 h-20 flex items-end '> Add Products</div> }              
             
 
             <div className='checkout-menu--footer'>
@@ -41,7 +44,7 @@ const CheckoutSideMenu = () => {
                         <p className='subtotal'>${subTotal}</p>
                     </div>
 
-                    <button onClick={()=>handleClikCheckout(carItems)} className='footer--botton'>Checkout</button>
+                    <button disabled={carCount === 0 ? true : false} onClick={()=>handleClikCheckout(carItems, subTotal, carCount)} className='footer--botton'>Checkout</button>
                 </div>
             </div>
 

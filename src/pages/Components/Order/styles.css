@@ -1,0 +1,41 @@
+.order--container{
+    
+    display: grid;
+    grid-template-columns: repeat(5, 1fr)  40px;
+    justify-content: space-around;
+    align-items: center;
+
+    border-top: 1px solid rgb(231, 231, 231);
+
+
+    height: 70px;
+
+    color: #646464;
+
+    font-size: 14px;
+}
+
+.order--container:hover{
+    
+
+    background-color: #dadada1a;
+}
+
+.order--container p:nth-child(1){
+    
+    font-weight: bold;
+}
+
+.order--container p:nth-last-child(1){
+    
+    font-size: 12px;
+    font-weight: bold;
+    color: #646464;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.order--container p:nth-last-child(1):hover{
+    
+   color: #174875;
+}

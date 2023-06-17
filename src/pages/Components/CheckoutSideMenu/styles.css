@@ -61,7 +61,7 @@
 
 .checkout-menu--footer{
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
 
     width: 100%;
     border-top: 1px solid gray;
@@ -78,7 +78,7 @@
 .checkout-menu--footer .footer--subtotal{
     display: flex;
     align-items: center;
-    justify-content: end;
+    justify-content: flex-end;
     gap: 72px; 
 
 
@@ -132,4 +132,11 @@
     transform: scale(105%);
     background-color: #1b1b1b;
     transition: 0.2s;
+}
+
+.footer--botton:disabled{
+ 
+    background-color: #8d8d8d;
+    pointer-events: none;
+
 }

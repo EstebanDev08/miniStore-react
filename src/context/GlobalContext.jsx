@@ -1,5 +1,6 @@
 
 
+import { stringify } from "postcss";
 import { createContext, useState, useEffect } from "react";
 
 const GlobalContext = createContext();
@@ -7,12 +8,16 @@ const GlobalContext = createContext();
 
 const GlobalContextProvider = ({children})=>{
 
-    const [carItem , setCar] = useState([])
+    const [carItem , setCart] = useState([])
 
     const [carCount , setCarCount] = useState(0)
 
     const [subTotal, setSubtotal] = useState(0)
 
+    const [orderItems, setOrderItems] = useState([]);
+
+
+    //para aregar prodcutos al carrito
     const addToCart = (item) => {
         const carItems = [...carItem];
         const existingItem = carItems.find((carItem) => carItem.id === item.id);
@@ -23,7 +28,7 @@ const GlobalContextProvider = ({children})=>{
           carItems.push({ ...item, amount: 1 });
         }
         
-        setCar(carItems);
+        setCart(carItems);
 
     };
 
@@ -39,14 +44,41 @@ const GlobalContextProvider = ({children})=>{
         });
       
         const filteredCarItems = updatedCarItems.filter((item) => item.amount > 0);
-        setCar(filteredCarItems);
+        setCart(filteredCarItems);
       };
 
 
       const removeAllItemsCart = (id)=>{
 
         const updatedCarItems = carItem.filter((item) => item.id !== id);
-        setCar(updatedCarItems);
+        setCart(updatedCarItems);
+
+      }
+
+
+      //orders
+
+      const addNewOrder = ({cartItems, totalPrice, totalItems}) => {
+        let id = orderItems.length + 1000;
+        const oreder = {
+          "id":id,
+          "date": new Date(),
+          "state":"pending",
+          "totalPrice":totalPrice,
+          "totalItems":totalItems,
+          "items":cartItems
+        }
+
+        id += 1
+
+        const newOreders = [...orderItems]
+
+        newOreders.push(oreder)
+
+        setOrderItems(newOreders) 
+        setCart([])
+
+        console.log(newOreders);
 
       }
             
@@ -103,7 +135,9 @@ const GlobalContextProvider = ({children})=>{
             carItems:carItem,
             subTotal,
             removeToCart,
-            removeAllItemsCart
+            removeAllItemsCart,
+            addNewOrder,
+            orderItems
          
            
 
