@@ -3,6 +3,12 @@ import './styles.css'
 
 const Order = ({item}) => {
 
+    const fortmatedNumber = item.totalPrice.toLocaleString('es-ES',
+        {
+            style:'currency',
+            currency:'USD'
+        }
+    )
 
     return (
 
@@ -10,9 +16,9 @@ const Order = ({item}) => {
             <p>#{item.id}</p>
             <p>{item.date.toDateString()}</p>
             <p>{item.totalItems} Items</p>
-            <p>${item.totalPrice}</p>
+            <p>{fortmatedNumber}</p>
             <p>{item.state}</p>
-            <p>View</p>
+            <a href='/my-order'>View</a>
         </div>
 
     )
