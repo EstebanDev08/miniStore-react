@@ -1,6 +1,5 @@
 
 
-import { stringify } from "postcss";
 import { createContext, useState, useEffect } from "react";
 
 const GlobalContext = createContext();
@@ -81,6 +80,15 @@ const GlobalContextProvider = ({children})=>{
         console.log(newOreders);
 
       }
+
+      const getOrderById = (id) => {
+
+       return orderItems.find(item => item.id == id)
+
+      }
+
+
+      
             
     useEffect(() => {
         const totalItems = carItem.reduce((total, item) => total + item.amount, 0);
@@ -117,9 +125,13 @@ const GlobalContextProvider = ({children})=>{
 
     const toggleShopingCart = () => {
 
-        const newState = !isOpenShopingCart
-        setOpenShopingCart(newState)
+      setOpenShopingCart((prevState) => !prevState);
+
     }
+
+
+
+    
 
     return(
                 
@@ -137,7 +149,9 @@ const GlobalContextProvider = ({children})=>{
             removeToCart,
             removeAllItemsCart,
             addNewOrder,
-            orderItems
+            orderItems,
+            getOrderById
+
          
            
 

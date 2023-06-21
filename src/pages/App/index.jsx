@@ -21,6 +21,7 @@ const ResolveRoutes = ()=>{
     {path: '/my-order', element: <MyOrder/>},
     {path: '/my-orders', element: <MyOrders/>},
     {path: '/sing-in', element: <SingIn/>},
+    {path: '/my-order/id/*', element: <MyOrder/>},
     {path: '/*', element: <NotFound/>},
   ]);
 

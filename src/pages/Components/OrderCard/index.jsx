@@ -1,5 +1,6 @@
 import { data } from 'autoprefixer';
 import './styles.css'
+import { Link } from 'react-router-dom';
 
 const Order = ({item}) => {
 
@@ -18,7 +19,9 @@ const Order = ({item}) => {
             <p>{item.totalItems} Items</p>
             <p>{fortmatedNumber}</p>
             <p>{item.state}</p>
-            <a href='/my-order'>View</a>
+            <Link to={`/my-order/id/${item.id}`}>
+                <p>View</p>
+            </Link>
         </div>
 
     )

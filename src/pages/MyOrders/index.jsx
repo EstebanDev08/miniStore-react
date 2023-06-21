@@ -1,5 +1,5 @@
 import React from "react"
-import { Order } from "../Components/Order"
+import { Order } from "../Components/OrderCard"
 
 import './styles.css'
 import { GlobalContext } from "../../context/GlobalContext"
