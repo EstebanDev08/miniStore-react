@@ -21,7 +21,7 @@ const useLocalStorage = (key, initialValue) => {
     const saveData = (newData) => {
         
         const stringifyData = JSON.stringify(newData)
-        localStorage.setItem(key, newData)
+        localStorage.setItem(key, stringifyData)
         setData(newData)
         
 
