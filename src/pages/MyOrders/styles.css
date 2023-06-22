@@ -3,17 +3,13 @@
     width: 100%;
     max-width: 1400px;
     padding: 0 5%;
-    top: 80px;
+    
 }
 
 .myorders--header .header-title{
-    font-size: 60px;
+    font-size: 50px;
 }
 
-.myorders-card--container{
-
-    
-}
 
 .myorders-card--container .card--titles{
 
