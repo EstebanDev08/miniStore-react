@@ -9,13 +9,17 @@ const useLocalStorage = (key, initialValue) => {
 
         const data = localStorage.getItem(key)
 
-        !data 
-        ? localStorage.setItem(key, initialValue)
-        : setItems(JSON.parse(data))
+        if(!data){
 
+            localStorage.setItem(key, JSON.stringify(initialValue))
 
+        }else{
+            setData(JSON.parse(data))
+        }
 
-    }, [key, initialValue])
+          
+
+    }, [])
 
 
     const saveData = (newData) => {

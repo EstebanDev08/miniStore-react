@@ -22,7 +22,7 @@ function MyOrder () {
             <div className="myorder-card--container bg-white p-8 pb-0 shadow-lg">
                 <div className="card--titles flex justify-between pb-4 border-b h-16 items-center">
                     <p className=" bg-slate-100 rounded-xl p-2 px-5"><span className=" font-bold">Order</span>  <span className=" text-blue-600 pl-3">{`#${order?.id}`}</span></p>
-                    <p className=" text-gray-500 text-xs ">Fecha:<span>{order?.date?.toDateString()}</span></p>
+                    <p className=" text-gray-500 text-xs ">Fecha: <span>{order?.date}</span></p>
                     <p className=" text-gray-500 text-xs ">Status: <span className=" text-orange-300">{order?.state}</span></p>
                 </div>
 

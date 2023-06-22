@@ -15,7 +15,7 @@ const Order = ({item}) => {
 
         <div className="order--container">
             <p>#{item.id}</p>
-            <p>{item.date.toDateString()}</p>
+            <p>{item.date}</p>
             <p>{item.totalItems} Items</p>
             <p>{fortmatedNumber}</p>
             <p>{item.state}</p>
