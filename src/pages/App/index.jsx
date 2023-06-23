@@ -20,7 +20,7 @@ const ResolveRoutes = ()=>{
     {path: '/my-account', element: <MyAccount/>},
     {path: '/my-order', element: <MyOrder/>},
     {path: '/my-orders', element: <MyOrders/>},
-    {path: '/sing-in', element: <SingIn/>},
+    {path: '/sign-in', element: <SingIn/>},
     {path: '/my-order/id/*', element: <MyOrder/>},
     {path: '/*', element: <NotFound/>},
   ]);

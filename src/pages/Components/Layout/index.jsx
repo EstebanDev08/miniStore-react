@@ -8,7 +8,7 @@ const Layout = ({children}) => {
     const {isOpenModal} = React.useContext(GlobalContext)
 
     return(
-        <main className="flex flex-col items-center mt-16">
+        <main className="grid justify-items-center pt-16 min-h-screen">
             {children}
 
             {isOpenModal && <Modal> <ProductDetail/> </Modal>}
