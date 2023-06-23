@@ -10,44 +10,45 @@ import './App.css';
 import Navbar from '../Components/Navbar';
 import { Layout } from '../Components/Layout';
 import {
-    GlobalContext,
-    GlobalContextProvider,
+  GlobalContext,
+  GlobalContextProvider,
 } from '../../context/GlobalContext';
 import { CheckoutSideMenu } from '../Components/CheckoutSideMenu';
 import React from 'react';
 
 const ResolveRoutes = () => {
-    let routes = useRoutes([
-        { path: '/', element: <Home /> },
-        { path: '/my-account', element: <MyAccount /> },
-        { path: '/my-order', element: <MyOrder /> },
-        { path: '/my-orders', element: <MyOrders /> },
-        { path: '/sign-in', element: <SingIn /> },
-        { path: '/my-order/id/*', element: <MyOrder /> },
-        { path: '/*', element: <NotFound /> },
-    ]);
+  let routes = useRoutes([
+    { path: '/', element: <Home /> },
+    { path: '/categorie/*', element: <Home /> },
+    { path: '/my-account', element: <MyAccount /> },
+    { path: '/my-order', element: <MyOrder /> },
+    { path: '/my-orders', element: <MyOrders /> },
+    { path: '/sign-in', element: <SingIn /> },
+    { path: '/my-order/id/*', element: <MyOrder /> },
+    { path: '/*', element: <NotFound /> },
+  ]);
 
-    return routes;
+  return routes;
 };
 
 const App = () => {
-    return (
-        <GlobalContextProvider>
-            <GlobalContext.Consumer>
-                {({ isOpenShopingCart }) => (
-                    <BrowserRouter>
-                        <Navbar />
+  return (
+    <GlobalContextProvider>
+      <GlobalContext.Consumer>
+        {({ isOpenShopingCart }) => (
+          <BrowserRouter>
+            <Navbar />
 
-                        <Layout>
-                            <ResolveRoutes />
-                        </Layout>
+            <Layout>
+              <ResolveRoutes />
+            </Layout>
 
-                        {isOpenShopingCart && <CheckoutSideMenu />}
-                    </BrowserRouter>
-                )}
-            </GlobalContext.Consumer>
-        </GlobalContextProvider>
-    );
+            {isOpenShopingCart && <CheckoutSideMenu />}
+          </BrowserRouter>
+        )}
+      </GlobalContext.Consumer>
+    </GlobalContextProvider>
+  );
 };
 
 export default App;

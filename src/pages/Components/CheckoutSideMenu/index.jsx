@@ -50,7 +50,7 @@ const CheckoutSideMenu = () => {
             <p className="subtotal">${subTotal}</p>
           </div>
 
-          <Link to={`${!isUserLogin ? '/sign-in' : ''}`}>
+          <Link to={`${!isUserLogin ? '/sign-in' : '/my-orders'}`}>
             <button
               disabled={carCount === 0 ? true : false}
               onClick={() =>

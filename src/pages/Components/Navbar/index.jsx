@@ -14,9 +14,9 @@ const Navbar = () => {
 
   const categories = [
     { to: '/', text: 'All' },
-    { to: '/clothes', text: 'Clothes' },
-    { to: '/furniture', text: 'Furniture' },
-    { to: '/toys', text: 'Toys' },
+    { to: '/categorie/clothes', text: 'Clothes' },
+    { to: '/categorie/furniture', text: 'Furniture' },
+    { to: '/categorie/toys', text: 'Toys' },
   ];
 
   const routes = [
