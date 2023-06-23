@@ -1,185 +1,153 @@
-
-
-import { createContext, useState, useEffect } from "react";
-import { useLocalStorage } from "../hooks/useLocalStorage";
+import { createContext, useState, useEffect } from 'react';
+import { useLocalStorage } from '../hooks/useLocalStorage';
 
 const GlobalContext = createContext();
 
+const GlobalContextProvider = ({ children }) => {
+  //const [carItem , setCart] = useState([])
 
-const GlobalContextProvider = ({children})=>{
+  const [carCount, setCarCount] = useState(0);
 
-    //const [carItem , setCart] = useState([])
+  const [subTotal, setSubtotal] = useState(0);
 
-    const [carCount , setCarCount] = useState(0)
+  // const [orderItems, setOrderItems] = useState([]);
 
-    const [subTotal, setSubtotal] = useState(0)
+  const { data: carItem, saveData: setCart } = useLocalStorage('carItem', []);
+  const { data: orderItems, saveData: setOrderItems } = useLocalStorage(
+    'OrderItems',
+    []
+  );
 
-   // const [orderItems, setOrderItems] = useState([]);
+  useEffect(() => {
+    console.log('hola');
+  }, []);
+  //para aregar prodcutos al carrito
+  const addToCart = (item) => {
+    const carItems = [...carItem];
+    const existingItem = carItems.find((carItem) => carItem.id === item.id);
 
+    if (existingItem) {
+      existingItem.amount += 1;
+    } else {
+      carItems.push({ ...item, amount: 1 });
+    }
 
-    const {data:carItem, saveData:setCart} = useLocalStorage('carItem', [])
-    const {data:orderItems, saveData:setOrderItems} = useLocalStorage('OrderItems', [])
+    setCart(carItems);
+  };
 
-    //para aregar prodcutos al carrito
-    const addToCart = (item) => {
-        const carItems = [...carItem];
-        const existingItem = carItems.find((carItem) => carItem.id === item.id);
-      
-        if (existingItem) {
-          existingItem.amount += 1;
-        } else {
-          carItems.push({ ...item, amount: 1 });
+  const removeToCart = (id) => {
+    const updatedCarItems = carItem.map((item) => {
+      if (item.id === id) {
+        if (item.amount > 0) {
+          return { ...item, amount: item.amount - 1 };
         }
-        
-        setCart(carItems);
+      }
+      return item;
+    });
 
+    const filteredCarItems = updatedCarItems.filter((item) => item.amount > 0);
+    setCart(filteredCarItems);
+  };
+
+  const removeAllItemsCart = (id) => {
+    const updatedCarItems = carItem.filter((item) => item.id !== id);
+    setCart(updatedCarItems);
+  };
+
+  //orders
+
+  const addNewOrder = ({ cartItems, totalPrice, totalItems }) => {
+    let id = orderItems.length + 1000;
+
+    const fechaActual = new Date();
+    const dia = fechaActual.getDate();
+    const mes = fechaActual.getMonth() + 1;
+    const anio = fechaActual.getFullYear();
+    const horas = fechaActual.getHours();
+    const minutos = fechaActual.getMinutes();
+    const segundos = fechaActual.getSeconds();
+
+    const oreder = {
+      id: id,
+      date: `${dia}/${mes}/${anio} ${horas}:${minutos}:${segundos}`,
+      state: 'pending',
+      totalPrice: totalPrice,
+      totalItems: totalItems,
+      items: cartItems,
     };
 
+    console.log(new Date());
 
-    const removeToCart = (id) => {
-        const updatedCarItems = carItem.map((item) => {
-          if (item.id === id) {
-            if (item.amount > 0) {
-              return { ...item, amount: item.amount - 1 };
-            }
-          }
-          return item;
-        });
-      
-        const filteredCarItems = updatedCarItems.filter((item) => item.amount > 0);
-        setCart(filteredCarItems);
-      };
+    id += 1;
 
+    const newOreders = [...orderItems];
 
-      const removeAllItemsCart = (id)=>{
+    newOreders.push(oreder);
 
-        const updatedCarItems = carItem.filter((item) => item.id !== id);
-        setCart(updatedCarItems);
+    setOrderItems(newOreders);
+    setCart([]);
+  };
 
-      }
+  const getOrderById = (id) => {
+    return orderItems.find((item) => item.id == id);
+  };
 
+  useEffect(() => {
+    const totalItems = carItem.reduce((total, item) => total + item.amount, 0);
+    setCarCount(totalItems);
+  }, [carItem]);
 
-      //orders
+  useEffect(() => {
+    const subTotal = carItem.reduce(
+      (total, item) => total + item.amount * item.price,
+      0
+    );
+    setSubtotal(subTotal);
+  }, [carItem]);
 
-      const addNewOrder = ({cartItems, totalPrice, totalItems}) => {
-        let id = orderItems.length + 1000;
+  const [isOpenModal, setOpenModal] = useState(false);
 
-        const fechaActual = new Date();
-        const dia = fechaActual.getDate();
-        const mes = fechaActual.getMonth() + 1;
-        const anio = fechaActual.getFullYear();
-        const horas = fechaActual.getHours();
-        const minutos = fechaActual.getMinutes();
-        const segundos = fechaActual.getSeconds();
+  const openModal = () => {
+    const newState = !isOpenModal;
 
-        const oreder = {
-          "id":id,
-          "date":`${dia}/${mes}/${anio} ${horas}:${minutos}:${segundos}` ,
-          "state":"pending",
-          "totalPrice":totalPrice,
-          "totalItems":totalItems,
-          "items":cartItems
-        }
+    setOpenModal(newState);
+  };
 
-        console.log(new Date());
+  const [itemOnModal, setItemOnModal] = useState({});
 
-        id += 1
+  const addItemToModal = (item) => {
+    setItemOnModal(item);
+  };
 
-        const newOreders = [...orderItems]
+  const [isOpenShopingCart, setOpenShopingCart] = useState(false);
 
-        newOreders.push(oreder)
+  const toggleShopingCart = () => {
+    setOpenShopingCart((prevState) => !prevState);
+  };
 
-        setOrderItems(newOreders) 
-        setCart([])
+  return (
+    <GlobalContext.Provider
+      value={{
+        addToCart,
+        carCount,
+        openModal,
+        isOpenModal,
+        addItemToModal,
+        itemOnModal,
+        isOpenShopingCart,
+        toggleShopingCart,
+        carItems: carItem,
+        subTotal,
+        removeToCart,
+        removeAllItemsCart,
+        addNewOrder,
+        orderItems,
+        getOrderById,
+      }}
+    >
+      {children}
+    </GlobalContext.Provider>
+  );
+};
 
-      }
-
-      const getOrderById = (id) => {
-
-       return orderItems.find(item => item.id == id)
-
-      }
-
-
-      
-            
-    useEffect(() => {
-        const totalItems = carItem.reduce((total, item) => total + item.amount, 0);
-        setCarCount(totalItems);
-
-    }, [carItem]);
-
-    useEffect(() => {
-        const subTotal = carItem.reduce((total, item) => total + (item.amount * item.price), 0);
-        setSubtotal(subTotal);
-
-    }, [carItem]);
-
-
-    
-
-    const [isOpenModal, setOpenModal] = useState(false)
- 
-    const openModal = () => {
-
-        const newState = !isOpenModal
-
-        setOpenModal(newState)        
-    }
-
-    const [itemOnModal, setItemOnModal] = useState({})
-
-    const addItemToModal = (item) =>{
-        setItemOnModal(item)
-    }
-
-
-    const [isOpenShopingCart, setOpenShopingCart] = useState(false)
-
-    const toggleShopingCart = () => {
-
-      setOpenShopingCart((prevState) => !prevState);
-
-    }
-
-
-
-  
-
-    
-
-    return(
-                
-        <GlobalContext.Provider value={{
-            addToCart,
-            carCount,
-            openModal,
-            isOpenModal,
-            addItemToModal,
-            itemOnModal,
-            isOpenShopingCart,
-            toggleShopingCart,
-            carItems:carItem,
-            subTotal,
-            removeToCart,
-            removeAllItemsCart,
-            addNewOrder,
-            orderItems,
-            getOrderById
-
-         
-           
-
-
-        }}>
-            {children}
-        </GlobalContext.Provider>
-    
-    )
-
-}
-
-
-
-
-export {GlobalContext,GlobalContextProvider}
+export { GlobalContext, GlobalContextProvider };
