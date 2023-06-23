@@ -12,16 +12,25 @@ const CheckoutSideMenu = () => {
     subTotal,
     addNewOrder,
     isUserLogin,
+    openModal,
   } = React.useContext(GlobalContext);
 
-  const handleClikCheckout = (items, subTotal, totalItems, isUserLogin) => {
+  const handleClikCheckout = (
+    items,
+    subTotal,
+    totalItems,
+    isUserLogin,
+    openModal
+  ) => {
     toggleShopingCart();
+    openModal();
+
     if (isUserLogin) {
       if (totalItems > 0) {
         addNewOrder({
-          cartItems: items,
-          totalPrice: subTotal,
-          totalItems: totalItems,
+          items,
+          subTotal,
+          totalItems,
         });
       }
     }
@@ -54,7 +63,13 @@ const CheckoutSideMenu = () => {
             <button
               disabled={carCount === 0 ? true : false}
               onClick={() =>
-                handleClikCheckout(carItems, subTotal, carCount, isUserLogin)
+                handleClikCheckout(
+                  carItems,
+                  subTotal,
+                  carCount,
+                  isUserLogin,
+                  openModal
+                )
               }
               className="footer--botton"
             >
