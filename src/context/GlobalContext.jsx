@@ -1,5 +1,6 @@
 import { createContext, useState, useEffect } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
+import { useFetchUser } from '../hooks/useFeachUser';
 
 const GlobalContext = createContext();
 
@@ -18,9 +19,6 @@ const GlobalContextProvider = ({ children }) => {
     []
   );
 
-  useEffect(() => {
-    console.log('hola');
-  }, []);
   //para aregar prodcutos al carrito
   const addToCart = (item) => {
     const carItems = [...carItem];
@@ -76,8 +74,6 @@ const GlobalContextProvider = ({ children }) => {
       items: cartItems,
     };
 
-    console.log(new Date());
-
     id += 1;
 
     const newOreders = [...orderItems];
@@ -125,6 +121,10 @@ const GlobalContextProvider = ({ children }) => {
     setOpenShopingCart((prevState) => !prevState);
   };
 
+  //flujo registro del usuario
+
+  const { isUserLogin } = useFetchUser();
+
   return (
     <GlobalContext.Provider
       value={{
@@ -143,6 +143,7 @@ const GlobalContextProvider = ({ children }) => {
         addNewOrder,
         orderItems,
         getOrderById,
+        isUserLogin,
       }}
     >
       {children}

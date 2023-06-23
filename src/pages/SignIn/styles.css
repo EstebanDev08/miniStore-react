@@ -1,0 +1,17 @@
+.loading-button {
+  position: relative;
+  overflow: hidden;
+  animation: bar-animation 1s linear infinite alternate;
+  background: linear-gradient(to right, #3b3b3b, #000000, #3b3b3b);
+  background-size: 200% auto;
+  background-position: -100% 0;
+}
+
+@keyframes bar-animation {
+  0% {
+    background-position: -100% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}

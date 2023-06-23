@@ -45,6 +45,7 @@ function SingIn() {
             id="email"
             placeholder="you@example.com"
             required
+            autoFocus
           />
         </div>
         <div className="mb-10">
