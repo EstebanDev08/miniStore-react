@@ -1,20 +1,24 @@
 
 
 import { createContext, useState, useEffect } from "react";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 
 const GlobalContext = createContext();
 
 
 const GlobalContextProvider = ({children})=>{
 
-    const [carItem , setCart] = useState([])
+    //const [carItem , setCart] = useState([])
 
     const [carCount , setCarCount] = useState(0)
 
     const [subTotal, setSubtotal] = useState(0)
 
-    const [orderItems, setOrderItems] = useState([]);
+   // const [orderItems, setOrderItems] = useState([]);
 
+
+    const {data:carItem, saveData:setCart} = useLocalStorage('carItem', [])
+    const {data:orderItems, saveData:setOrderItems} = useLocalStorage('OrderItems', [])
 
     //para aregar prodcutos al carrito
     const addToCart = (item) => {
@@ -59,14 +63,25 @@ const GlobalContextProvider = ({children})=>{
 
       const addNewOrder = ({cartItems, totalPrice, totalItems}) => {
         let id = orderItems.length + 1000;
+
+        const fechaActual = new Date();
+        const dia = fechaActual.getDate();
+        const mes = fechaActual.getMonth() + 1;
+        const anio = fechaActual.getFullYear();
+        const horas = fechaActual.getHours();
+        const minutos = fechaActual.getMinutes();
+        const segundos = fechaActual.getSeconds();
+
         const oreder = {
           "id":id,
-          "date": new Date(),
+          "date":`${dia}/${mes}/${anio} ${horas}:${minutos}:${segundos}` ,
           "state":"pending",
           "totalPrice":totalPrice,
           "totalItems":totalItems,
           "items":cartItems
         }
+
+        console.log(new Date());
 
         id += 1
 
@@ -76,8 +91,6 @@ const GlobalContextProvider = ({children})=>{
 
         setOrderItems(newOreders) 
         setCart([])
-
-        console.log(newOreders);
 
       }
 
@@ -130,6 +143,8 @@ const GlobalContextProvider = ({children})=>{
     }
 
 
+
+  
 
     
 
