@@ -5,20 +5,19 @@ import { useFetchUser } from '../hooks/useFeachUser';
 const GlobalContext = createContext();
 
 const GlobalContextProvider = ({ children }) => {
-  //flujo registro del usuario
-
   const { userData, isUserLogin, f, loading } = useFetchUser();
 
-  // flojo de compras en la pagina
   const [carCount, setCarCount] = useState(0);
   const [subTotal, setSubtotal] = useState(0);
-  const { data: carItem, saveData: setCart } = useLocalStorage('carItem', []);
+  const { data: carItem, saveData: setCart } = useLocalStorage(
+    `carItems_${userData?.id}`,
+    []
+  );
   const { data: orderItems, saveData: setOrderItems } = useLocalStorage(
-    'OrderItems',
+    `orderItems_${userData?.id}`,
     []
   );
 
-  //para aregar prodcutos al carrito
   const addToCart = (item) => {
     const carItems = [...carItem];
     const existingItem = carItems.find((carItem) => carItem.id === item.id);
@@ -51,11 +50,7 @@ const GlobalContextProvider = ({ children }) => {
     setCart(updatedCarItems);
   };
 
-  //orders
-
   const addNewOrder = ({ cartItems, totalPrice, totalItems }) => {
-    let id = orderItems.length + 1000;
-
     const fechaActual = new Date();
     const dia = fechaActual.getDate();
     const mes = fechaActual.getMonth() + 1;
@@ -64,8 +59,8 @@ const GlobalContextProvider = ({ children }) => {
     const minutos = fechaActual.getMinutes();
     const segundos = fechaActual.getSeconds();
 
-    const oreder = {
-      id: id,
+    const order = {
+      id: orderItems.length + 1000,
       date: `${dia}/${mes}/${anio} ${horas}:${minutos}:${segundos}`,
       state: 'pending',
       totalPrice: totalPrice,
@@ -73,18 +68,13 @@ const GlobalContextProvider = ({ children }) => {
       items: cartItems,
     };
 
-    id += 1;
-
-    const newOreders = [...orderItems];
-
-    newOreders.push(oreder);
-
-    setOrderItems(newOreders);
+    const updatedOrderItems = [...orderItems, order];
+    setOrderItems(updatedOrderItems);
     setCart([]);
   };
 
   const getOrderById = (id) => {
-    return orderItems.find((item) => item.id == id);
+    return orderItems.find((item) => item.id === id);
   };
 
   useEffect(() => {
@@ -100,21 +90,44 @@ const GlobalContextProvider = ({ children }) => {
     setSubtotal(subTotal);
   }, [carItem]);
 
+  useEffect(() => {
+    if (userData) {
+      const storedCarItems = localStorage.getItem(`carItems_${userData.id}`);
+      if (storedCarItems) {
+        setCart(JSON.parse(storedCarItems));
+      }
+
+      const storedOrderItems = localStorage.getItem(
+        `orderItems_${userData.id}`
+      );
+      if (storedOrderItems) {
+        setOrderItems(JSON.parse(storedOrderItems));
+      }
+    }
+  }, [userData]);
+
+  useEffect(() => {
+    if (userData) {
+      localStorage.setItem(`carItems_${userData.id}`, JSON.stringify(carItem));
+      localStorage.setItem(
+        `orderItems_${userData.id}`,
+        JSON.stringify(orderItems)
+      );
+    }
+  }, [userData, carItem, orderItems]);
+
   const [isOpenModal, setOpenModal] = useState(false);
+  const [itemOnModal, setItemOnModal] = useState({});
+  const [isOpenShopingCart, setOpenShopingCart] = useState(false);
 
   const openModal = () => {
     const newState = !isOpenModal;
-
     setOpenModal(newState);
   };
-
-  const [itemOnModal, setItemOnModal] = useState({});
 
   const addItemToModal = (item) => {
     setItemOnModal(item);
   };
-
-  const [isOpenShopingCart, setOpenShopingCart] = useState(false);
 
   const toggleShopingCart = () => {
     setOpenShopingCart((prevState) => !prevState);

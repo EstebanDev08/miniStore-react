@@ -20,9 +20,9 @@ const CheckoutSideMenu = () => {
     if (isUserLogin) {
       if (totalItems > 0) {
         addNewOrder({
-          items,
-          subTotal,
-          totalItems,
+          cartItems: items,
+          totalPrice: subTotal,
+          totalItems: totalItems,
         });
       }
     }
