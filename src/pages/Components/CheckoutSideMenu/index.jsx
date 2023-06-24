@@ -12,18 +12,10 @@ const CheckoutSideMenu = () => {
     subTotal,
     addNewOrder,
     isUserLogin,
-    openModal,
   } = React.useContext(GlobalContext);
 
-  const handleClikCheckout = (
-    items,
-    subTotal,
-    totalItems,
-    isUserLogin,
-    openModal
-  ) => {
+  const handleClikCheckout = (items, subTotal, totalItems, isUserLogin) => {
     toggleShopingCart();
-    openModal();
 
     if (isUserLogin) {
       if (totalItems > 0) {
@@ -59,17 +51,11 @@ const CheckoutSideMenu = () => {
             <p className="subtotal">${subTotal}</p>
           </div>
 
-          <Link to={`${!isUserLogin ? '/sign-in' : '/my-orders'}`}>
+          <Link to={`${'/my-orders'}`}>
             <button
               disabled={carCount === 0 ? true : false}
               onClick={() =>
-                handleClikCheckout(
-                  carItems,
-                  subTotal,
-                  carCount,
-                  isUserLogin,
-                  openModal
-                )
+                handleClikCheckout(carItems, subTotal, carCount, isUserLogin)
               }
               className="footer--botton"
             >

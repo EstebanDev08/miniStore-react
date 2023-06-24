@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useRoutes, BrowserRouter, Navigate } from 'react-router-dom';
 import { Home } from '../Home';
 import { MyAccount } from '../MyAccount';
@@ -13,7 +13,6 @@ import {
   GlobalContextProvider,
 } from '../../context/GlobalContext';
 import { CheckoutSideMenu } from '../Components/CheckoutSideMenu';
-import { useFetchUser } from '../../hooks/useFeachUser';
 import { SingIn } from '../SignIn';
 
 const ResolveRoutes = ({ isLoggedIn }) => {
