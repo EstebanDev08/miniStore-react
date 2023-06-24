@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 const Navbar = () => {
   const activeStyle = 'underline underline-offset-4 ';
 
-  const { carCount, toggleShopingCart, isUserLogin } =
+  const { carCount, toggleShopingCart, isUserLogin, userData } =
     React.useContext(GlobalContext);
 
   const handleClickCart = () => {
@@ -42,11 +42,7 @@ const Navbar = () => {
         ))}
       </ul>
       <ul className="flex items-center gap-3">
-        {isUserLogin ? (
-          <li className="text-black/60">rosario@testing.com</li>
-        ) : (
-          ''
-        )}
+        {isUserLogin ? <li className="text-black/60">{userData.email}</li> : ''}
         {routes.map((route, index) =>
           route.isUserLogin === isUserLogin ? (
             <li key={index}>

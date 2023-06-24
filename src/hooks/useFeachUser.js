@@ -61,11 +61,9 @@ const useFetchUser = () => {
         saveAccessToken(data.access_token);
         setIsLogin(true);
         setLoading(false);
-        console.log(data);
       }
     } catch (error) {
       setError(error);
-      console.log(error);
       setLoading(false);
     }
   };

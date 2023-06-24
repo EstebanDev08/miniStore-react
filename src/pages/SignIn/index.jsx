@@ -4,9 +4,7 @@ import './styles.css';
 import { GlobalContext } from '../../context/GlobalContext';
 
 function SingIn() {
-  const [isLoading, setIsLoading] = useState(false);
-
-  const { f } = useContext(GlobalContext);
+  const { f, loading } = useContext(GlobalContext);
 
   const handleSubmit = (event, f) => {
     event.preventDefault();
@@ -16,12 +14,6 @@ function SingIn() {
     const password = form.password.value;
 
     f({ email: 'admin@mail.com', password: 'admin123' });
-
-    setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-      // Resto del código de manejo del formulario
-    }, 2000);
   };
 
   return (
@@ -68,12 +60,12 @@ function SingIn() {
 
         <button
           className={` w-full bg-[#292929] text-white h-10 rounded-lg hover:bg-[#1b1b1b] ${
-            isLoading ? 'loading-button' : ''
+            loading ? 'loading-button' : ''
           }`}
           type="submit"
         >
-          <span className={isLoading ? 'loading-text' : ''}>
-            {isLoading ? 'Loading...' : 'Login'}
+          <span className={loading ? 'loading-text' : ''}>
+            {loading ? 'Loading...' : 'Login'}
           </span>
         </button>
       </form>

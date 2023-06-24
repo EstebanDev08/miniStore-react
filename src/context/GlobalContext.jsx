@@ -5,14 +5,13 @@ import { useFetchUser } from '../hooks/useFeachUser';
 const GlobalContext = createContext();
 
 const GlobalContextProvider = ({ children }) => {
-  //const [carItem , setCart] = useState([])
+  //flujo registro del usuario
 
+  const { userData, isUserLogin, f, loading } = useFetchUser();
+
+  // flojo de compras en la pagina
   const [carCount, setCarCount] = useState(0);
-
   const [subTotal, setSubtotal] = useState(0);
-
-  // const [orderItems, setOrderItems] = useState([]);
-
   const { data: carItem, saveData: setCart } = useLocalStorage('carItem', []);
   const { data: orderItems, saveData: setOrderItems } = useLocalStorage(
     'OrderItems',
@@ -121,11 +120,6 @@ const GlobalContextProvider = ({ children }) => {
     setOpenShopingCart((prevState) => !prevState);
   };
 
-  //flujo registro del usuario
-
-  const { isUserLogin, f } = useFetchUser();
-  console.log(isUserLogin);
-
   return (
     <GlobalContext.Provider
       value={{
@@ -146,6 +140,8 @@ const GlobalContextProvider = ({ children }) => {
         getOrderById,
         isUserLogin,
         f,
+        loading,
+        userData,
       }}
     >
       {children}
