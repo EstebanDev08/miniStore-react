@@ -123,7 +123,8 @@ const GlobalContextProvider = ({ children }) => {
 
   //flujo registro del usuario
 
-  const { isUserLogin } = useFetchUser();
+  const { isUserLogin, f } = useFetchUser();
+  console.log(isUserLogin);
 
   return (
     <GlobalContext.Provider
@@ -144,6 +145,7 @@ const GlobalContextProvider = ({ children }) => {
         orderItems,
         getOrderById,
         isUserLogin,
+        f,
       }}
     >
       {children}

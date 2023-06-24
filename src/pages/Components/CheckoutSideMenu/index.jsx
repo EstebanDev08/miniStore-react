@@ -51,9 +51,9 @@ const CheckoutSideMenu = () => {
             <p className="subtotal">${subTotal}</p>
           </div>
 
-          <Link to={`${'/my-orders'}`}>
+          <Link to={`/my-orders`}>
             <button
-              disabled={carCount === 0 ? true : false}
+              disabled={carCount === 0}
               onClick={() =>
                 handleClikCheckout(carItems, subTotal, carCount, isUserLogin)
               }

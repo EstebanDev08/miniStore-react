@@ -1,16 +1,21 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './styles.css';
+import { GlobalContext } from '../../context/GlobalContext';
 
 function SingIn() {
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (event) => {
+  const { f } = useContext(GlobalContext);
+
+  const handleSubmit = (event, f) => {
     event.preventDefault();
 
     const form = event.target;
     const email = form.email.value;
     const password = form.password.value;
+
+    f({ email: 'admin@mail.com', password: 'admin123' });
 
     setIsLoading(true);
     setTimeout(() => {
@@ -35,7 +40,7 @@ function SingIn() {
           </Link>
         </p>
       </div>
-      <form onSubmit={handleSubmit} id="sign-in--form">
+      <form onSubmit={() => handleSubmit(event, f)} id="sign-in--form">
         <div className="mb-3">
           <p className=" font-bold ">Email Address</p>
           <input

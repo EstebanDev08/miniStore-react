@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import { GlobalContext } from '../../../context/GlobalContext';
-import React from 'react';
+import React, { useState } from 'react';
 
 const Navbar = () => {
   const activeStyle = 'underline underline-offset-4 ';

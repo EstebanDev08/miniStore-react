@@ -34,7 +34,10 @@ const ResolveRoutes = ({ isLoggedIn }) => {
       path: '/my-orders',
       element: isLoggedIn ? <MyOrders /> : <Navigate to="/sign-in" />,
     },
-    { path: '/sign-in', element: <SingIn /> },
+    {
+      path: '/sign-in',
+      element: isLoggedIn ? <Navigate to="/" /> : <SingIn />,
+    },
     {
       path: '/my-order/id/*',
       element: isLoggedIn ? <MyOrder /> : <Navigate to="/sign-in" />,

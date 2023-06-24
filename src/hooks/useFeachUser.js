@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useLocalStorage } from './useLocalStorage';
 
-const API = 'https://api.escuelajs.co/api/v1/auth/profile';
+const API = 'https://api.escuelajs.co/api/v1';
 
 const useFetchUser = () => {
   const [userData, setUserData] = useState({});
@@ -17,7 +17,7 @@ const useFetchUser = () => {
   useEffect(() => {
     const checkUserLoggedIn = async () => {
       try {
-        const response = await fetch(`${API}`, {
+        const response = await fetch(`${API}/auth/profile`, {
           method: 'GET',
           headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -25,11 +25,12 @@ const useFetchUser = () => {
         });
         if (!response.ok) {
           throw new Error('user is not login');
+        } else {
+          const data = await response.json();
+          setUserData(data);
+          setIsLogin(true);
+          setLoading(false);
         }
-        const data = await response.json();
-        setItems(data);
-        setLoading(false);
-        setIsLogin(true);
       } catch (error) {
         setError(error);
         setLoading(false);
@@ -37,9 +38,39 @@ const useFetchUser = () => {
     };
 
     checkUserLoggedIn();
-  }, []);
+  }, [accessToken]);
 
-  return { userData, loading, error, isUserLogin };
+  const f = async ({ email, password }) => {
+    try {
+      const info = {
+        email: email,
+        password: password,
+      };
+
+      const response = await fetch(`${API}/auth/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(info),
+      });
+      if (!response.ok) {
+        throw new Error('Info icorrect');
+      } else {
+        const data = await response.json();
+        saveAccessToken(data.access_token);
+        setIsLogin(true);
+        setLoading(false);
+        console.log(data);
+      }
+    } catch (error) {
+      setError(error);
+      console.log(error);
+      setLoading(false);
+    }
+  };
+
+  return { userData, loading, error, isUserLogin, f };
 };
 
 export { useFetchUser };
