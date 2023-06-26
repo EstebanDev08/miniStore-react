@@ -9,8 +9,6 @@ function MyOrder() {
 
   const order = getOrderById(idOrder);
 
-  console.log(order);
-
   return order !== undefined ? (
     <section className="myorders-container bg-slate-50 h-auto mb-8">
       <div className="myorders--header flex items-center gap-8 pt-8">

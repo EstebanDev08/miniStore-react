@@ -74,7 +74,8 @@ const GlobalContextProvider = ({ children }) => {
   };
 
   const getOrderById = (id) => {
-    return orderItems.find((item) => item.id === id);
+    const updatedCarItems = orderItems.find((item) => item.id == id);
+    return updatedCarItems;
   };
 
   useEffect(() => {

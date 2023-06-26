@@ -3,8 +3,6 @@ import './styles.css';
 import { Link } from 'react-router-dom';
 
 const Order = ({ item }) => {
-  console.log(item);
-
   const fortmatedNumber = item.totalPrice.toLocaleString('es-ES', {
     style: 'currency',
     currency: 'USD',
