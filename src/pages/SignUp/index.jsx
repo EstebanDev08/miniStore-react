@@ -1,38 +1,51 @@
-import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
-import './styles.css';
 import { GlobalContext } from '../../context/GlobalContext';
+import { useContext } from 'react';
 
-function SingIn() {
-  const { loginUser, loading } = useContext(GlobalContext);
+const SignUp = () => {
+  const { loading, registerUser } = useContext(GlobalContext);
 
-  const handleSubmit = (event, login) => {
+  const handleSubmit = (event, register) => {
     event.preventDefault();
 
     const form = event.target;
     const email = form.email.value;
     const password = form.password.value;
+    const name = form.name.value.trim();
 
-    login({ email: email, password: password });
+    register({ email: email, password: password, name: name });
   };
 
   return (
     <div className=" shadow-xl p-10  self-center ">
       <div className=" mb-10">
-        <p className=" text-3xl font-bold text-[#292929]">Sign In</p>
+        <p className=" text-3xl font-bold text-[#292929]">Sign Up</p>
         <p>
-          <span className=" text-gray-400 text-sm">
-            Doesn't have an account yet?{' '}
-          </span>
+          <span className=" text-gray-400 text-sm">Have an account yet? </span>
 
-          <Link to={'/sign-up'}>
+          <Link to={'/sign-in'}>
             <span className="font-bold cursor-pointer text-sm underline text-gray-700">
-              Sing Up
+              Sing In
             </span>
           </Link>
         </p>
       </div>
-      <form onSubmit={() => handleSubmit(event, loginUser)} id="sign-in--form">
+      <form
+        onSubmit={() => handleSubmit(event, registerUser)}
+        id="sign-in--form"
+      >
+        <div className="mb-3">
+          <p className=" font-bold ">Name</p>
+          <input
+            className=" border-solid border-2 p-2 rounded-xl placeholder:text-sm text-sm w-full"
+            type="text"
+            name="sign-in--form"
+            id="name"
+            placeholder="Your Name"
+            required
+            autoFocus
+          />
+        </div>
         <div className="mb-3">
           <p className=" font-bold ">Email Address</p>
           <input
@@ -42,7 +55,6 @@ function SingIn() {
             id="email"
             placeholder="you@example.com"
             required
-            autoFocus
           />
         </div>
         <div className="mb-10">
@@ -65,12 +77,12 @@ function SingIn() {
           type="submit"
         >
           <span className={loading ? 'loading-text' : ''}>
-            {loading ? 'Loading...' : 'Login'}
+            {loading ? 'Creating...' : 'Create'}
           </span>
         </button>
       </form>
     </div>
   );
-}
+};
 
-export { SingIn };
+export { SignUp };

@@ -14,6 +14,7 @@ import {
 } from '../../context/GlobalContext';
 import { CheckoutSideMenu } from '../Components/CheckoutSideMenu';
 import { SingIn } from '../SignIn';
+import { SignUp } from '../SignUp';
 
 const ResolveRoutes = ({ isLoggedIn }) => {
   let routes = useRoutes([
@@ -37,6 +38,10 @@ const ResolveRoutes = ({ isLoggedIn }) => {
     {
       path: '/sign-in',
       element: isLoggedIn ? <Navigate to="/" /> : <SingIn />,
+    },
+    {
+      path: '/sign-up',
+      element: isLoggedIn ? <Navigate to="/" /> : <SignUp />,
     },
     {
       path: '/my-order/id/*',

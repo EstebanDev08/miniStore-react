@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useLocalStorage } from './useLocalStorage';
+import { data } from 'autoprefixer';
 
 const API = 'https://api.escuelajs.co/api/v1';
 
@@ -40,13 +41,14 @@ const useFetchUser = () => {
     checkUserLoggedIn();
   }, [accessToken]);
 
-  const f = async ({ email, password }) => {
+  const loginUser = async ({ email, password }) => {
     try {
       const info = {
         email: email,
         password: password,
       };
 
+      await checkEmail(email);
       const response = await fetch(`${API}/auth/login`, {
         method: 'POST',
         headers: {
@@ -68,7 +70,66 @@ const useFetchUser = () => {
     }
   };
 
-  return { userData, loading, error, isUserLogin, f };
+  const registerUser = async ({ email, password, name }) => {
+    try {
+      const info = {
+        name: name,
+        email: email,
+        password: password,
+        avatar: 'https://api.lorem.space/image/face?w=640&h=480&r=867',
+      };
+
+      const isEmailAvailable = await checkEmail(email);
+      if (isEmailAvailable) {
+        const response = await fetch(`${API}/users`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(info),
+        });
+
+        if (!response.ok) {
+          throw new Error('Info icorrect');
+        } else {
+          const data = await response.json();
+          setUserData(data);
+          setLoading(false);
+
+          await loginUser({ email: email, password: password });
+
+          console.log(loginUser(email, password));
+        }
+      }
+    } catch (error) {
+      setError(error);
+      setLoading(false);
+    }
+  };
+
+  const checkEmail = async (email) => {
+    try {
+      const response = await fetch(`${API}/users`);
+      if (!response.ok) {
+        throw new Error('fallo el check del email');
+      } else {
+        const data = await response.json();
+
+        const existEmail = data.find((item) => item.email === email);
+        setLoading(false);
+        if (existEmail) {
+          return false;
+        } else {
+          return true;
+        }
+      }
+    } catch (error) {
+      setError(error);
+      setLoading(false);
+    }
+  };
+
+  return { userData, loading, error, isUserLogin, loginUser, registerUser };
 };
 
 export { useFetchUser };
