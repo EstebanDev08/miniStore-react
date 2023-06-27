@@ -3,7 +3,7 @@ import { GlobalContext } from '../../context/GlobalContext';
 import { useContext } from 'react';
 
 const SignUp = () => {
-  const { loading, registerUser } = useContext(GlobalContext);
+  const { loading, registerUser, error } = useContext(GlobalContext);
 
   const handleSubmit = (event, register) => {
     event.preventDefault();

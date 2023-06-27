@@ -5,7 +5,7 @@ import { useFetchUser } from '../hooks/useFeachUser';
 const GlobalContext = createContext();
 
 const GlobalContextProvider = ({ children }) => {
-  const { userData, isUserLogin, loginUser, loading, registerUser } =
+  const { userData, isUserLogin, loginUser, loading, registerUser, error } =
     useFetchUser();
 
   const [carCount, setCarCount] = useState(0);
@@ -158,6 +158,7 @@ const GlobalContextProvider = ({ children }) => {
         loading,
         userData,
         registerUser,
+        error,
       }}
     >
       {children}

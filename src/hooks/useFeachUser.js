@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useLocalStorage } from './useLocalStorage';
-import { data } from 'autoprefixer';
 
 const API = 'https://api.escuelajs.co/api/v1';
 
@@ -33,7 +32,6 @@ const useFetchUser = () => {
           setLoading(false);
         }
       } catch (error) {
-        setError(error);
         setLoading(false);
       }
     };
@@ -48,24 +46,29 @@ const useFetchUser = () => {
         password: password,
       };
 
-      await checkEmail(email);
-      const response = await fetch(`${API}/auth/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(info),
-      });
-      if (!response.ok) {
-        throw new Error('Info icorrect');
+      const existEmail = !(await checkEmail(email));
+
+      if (existEmail) {
+        const response = await fetch(`${API}/auth/login`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(info),
+        });
+        if (!response.ok) {
+          throw new Error('Info icorrect');
+        } else {
+          const data = await response.json();
+          saveAccessToken(data.access_token);
+          setIsLogin(true);
+          setLoading(false);
+        }
       } else {
-        const data = await response.json();
-        saveAccessToken(data.access_token);
-        setIsLogin(true);
-        setLoading(false);
+        throw new Error('this email does not exist');
       }
     } catch (error) {
-      setError(error);
+      alert(error);
       setLoading(false);
     }
   };
@@ -97,11 +100,12 @@ const useFetchUser = () => {
           setLoading(false);
 
           await loginUser({ email: email, password: password });
-
-          console.log(loginUser(email, password));
         }
+      } else {
+        throw new Error('the mail already exists');
       }
     } catch (error) {
+      alert(error);
       setError(error);
       setLoading(false);
     }
@@ -115,13 +119,9 @@ const useFetchUser = () => {
       } else {
         const data = await response.json();
 
-        const existEmail = data.find((item) => item.email === email);
+        const existEmail = data.some((item) => item.email === email);
         setLoading(false);
-        if (existEmail) {
-          return false;
-        } else {
-          return true;
-        }
+        return !existEmail;
       }
     } catch (error) {
       setError(error);
