@@ -18,7 +18,7 @@ Esta es una aplicación de mini tienda online desarrollada con React.js y Node.j
 ![image](https://github.com/EstebanDev08/miniStore-react/assets/86735707/2e480653-3c3d-45db-998b-c02419b2c3d4)
 
 ## Tecnologías utilizadas
-
+ 
 - React.js: biblioteca de JavaScript para construir la interfaz de usuario.
 - Git: sistema de control de versiones para gestionar el desarrollo y las ramas del proyecto.
 
